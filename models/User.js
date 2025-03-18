@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 
 // Define user types as constants
 export const USER_TYPES = {

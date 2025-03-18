@@ -7,53 +7,22 @@ const plantSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    scientificName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
+
     plantType: {
       type: String,
       required: true,
-      enum: ["Flower", "Vegetable", "Fruit"],
+      // enum: ["flower", "vegetable", "fruit"],
     },
-    careInstructions: {
-      watering: {
-        frequency: String,
-        notes: String,
-      },
-      sunlight: {
-        type: String,
-        enum: [
-          "Full Sun",
-          "Partial Sun",
-          "Shade",
-          "Partial Shade",
-          "Full Shade",
-        ],
-      },
-      soil: String,
+    plantCharacteristics: {
+      type: String,
     },
-    growthStages: [
-      {
-        name: String,
-        description: String,
-      },
-    ],
-    images: [
-      {
-        url: String,
-        caption: String,
-      },
-    ],
-    isActive: {
-      type: Boolean,
-      default: true,
+    careRequirements: {
+      watering: String,
+      fertilization: String,
+      pestControl: String,
     },
+    ageRange: String,
+    growthStages: [String],
   },
   {
     timestamps: true,

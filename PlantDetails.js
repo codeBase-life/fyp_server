@@ -1,0 +1,3 @@
+const getPlantDetials = () => {};
+
+export { getPlantDetials };

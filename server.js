@@ -6,6 +6,8 @@ import cors from "cors";
 const PORT = process.env.PORT || 5000;
 import connectDB from "./config/db.js";
 import User from "./models/User.js";
+import Plant from "./models/Plant.js";
+import { getPlantDetials } from "./PlantDetails.js";
 
 dotenv.config();
 
@@ -76,6 +78,45 @@ app.post("/api/users/register", (req, res) => {
   }
 });
 
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
+// getting plant details
+app.post("/api/plantData", (req, res) => {
+  try {
+    const {
+      name,
+      type,
+      age,
+      water,
+      pestcontrol,
+      characteristics,
+      stages,
+      fertilization,
+    } = req.body;
+    const newPlant = new Plant({
+      name,
+
+      plantType: type, // Map to required field
+      plantCharaceristics: characteristics, // Optional additional field
+
+      careRequirements: {
+        watring: water, // Note: schema has "watring" misspelled
+        fertilization,
+        pestControl: pestcontrol, // Fix case sensitivity
+      },
+
+      ageRange: age, // Map to schema field
+      growthStages: [stages], // Convert to array as required by schema
+    });
+
+    const updatePlant = async () => {
+      await newPlant.save();
+    };
+    updatePlant();
+    res.status(201).json({ message: "plant save successfully" });
+  } catch (error) {
+    console.error("error saving plant data", error);
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
